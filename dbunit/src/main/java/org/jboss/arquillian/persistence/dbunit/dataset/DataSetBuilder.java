@@ -23,17 +23,15 @@ import java.io.InputStream;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.DefaultDataSet;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.excel.XlsDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.jboss.arquillian.persistence.core.data.descriptor.Format;
 import org.jboss.arquillian.persistence.dbunit.dataset.json.JsonDataSet;
 import org.jboss.arquillian.persistence.dbunit.dataset.xml.DtdResolver;
+import org.jboss.arquillian.persistence.dbunit.dataset.xml.replacer.DynamicReplacementDataSet;
 import org.jboss.arquillian.persistence.dbunit.dataset.yaml.YamlDataSet;
 import org.jboss.arquillian.persistence.dbunit.exception.DBUnitInitializationException;
 import org.yaml.snakeyaml.Yaml;
-
-import static org.jboss.arquillian.persistence.core.data.descriptor.Format.*;
 
 /**
  *
@@ -162,7 +160,7 @@ public class DataSetBuilder
 
    private IDataSet defineReplaceableExpressions(IDataSet dataSet)
    {
-      final ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
+      final DynamicReplacementDataSet replacementDataSet = new DynamicReplacementDataSet(dataSet);
       replacementDataSet.addReplacementObject("[null]", null);
       replacementDataSet.addReplacementObject("[NULL]", null);
       return replacementDataSet;
